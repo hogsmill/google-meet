@@ -8,7 +8,8 @@ export const store = new Vuex.Store({
     thisGame: 'Socket Test',
     connections: 0,
     connectionError: null,
-    localStorageStatus: true
+    localStorageStatus: true,
+    tab: ''
   },
   getters: {
     thisGame: (state) => {
@@ -22,6 +23,9 @@ export const store = new Vuex.Store({
     },
     getLocalStorageStatus: (state) => {
       return state.localStorageStatus
+    },
+    getTab: (state) => {
+      return state.tab
     }
   },
   mutations: {
@@ -33,6 +37,9 @@ export const store = new Vuex.Store({
     },
     localStorageStatus: (state, payload) => {
       state.localStorageStatus = payload
+    },
+    updateTab: (state, payload) => {
+      state.tab = payload
     }
   },
   actions: {
@@ -44,6 +51,9 @@ export const store = new Vuex.Store({
     },
     localStorageStatus: ({ commit }, payload) => {
       commit('localStorageStatus', payload)
+    },
+    setTab: ({ commit }, payload) => {
+      commit('updateTab', payload)
     }
   }
 })

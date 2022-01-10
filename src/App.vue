@@ -7,8 +7,16 @@
     <div v-if="localStorageStatus != 'ok'" class="not-connected">
       WARNING: {{ localStorageStatus }} - please enable cookies in browser settings
     </div>
-    <Setup />
-    <Meeting />
+    <div>
+      Tab: '{{ tab }}'
+    </div>
+    <div class="container-fluid text-center">
+      <Scope />
+      <div class="row">
+        <Setup v-if="tab == 'setup'" />
+        <Meeting v-if="tab == 'meeting'" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -18,6 +26,7 @@ import bus from './socket.js'
 import ls from './lib/localStorage.js'
 
 import Header from './components/Header.vue'
+import Scope from './components/Scope.vue'
 import Setup from './components/Setup.vue'
 import Meeting from './components/Meeting.vue'
 
@@ -25,6 +34,7 @@ export default {
   name: 'App',
   components: {
     Header,
+    Scope,
     Setup,
     Meeting
   },
@@ -38,6 +48,9 @@ export default {
     },
     localStorageStatus() {
       return this.$store.getters.getLocalStorageStatus
+    },
+    tab() {
+      return this.$store.getters.getTab
     }
   },
   created() {

@@ -1,7 +1,5 @@
 <template>
   <div>
-    <button>
-      Set Up
-    </button>
+    Meeting
   </div>
 </template>
