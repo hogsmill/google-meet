@@ -7,9 +7,6 @@
     <div v-if="localStorageStatus != 'ok'" class="not-connected">
       WARNING: {{ localStorageStatus }} - please enable cookies in browser settings
     </div>
-    <div>
-      Tab: '{{ tab }}'
-    </div>
     <div class="container-fluid text-center">
       <Scope />
       <div class="row">
@@ -79,6 +76,10 @@ export default {
     color: #fff;
     font-weight: bold;
     margin: 6px;
+  }
+
+  .content {
+    margin: 0 auto;
   }
 
 </style>

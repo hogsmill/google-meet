@@ -9,7 +9,8 @@ export const store = new Vuex.Store({
     connections: 0,
     connectionError: null,
     localStorageStatus: true,
-    tab: ''
+    tab: '',
+    meeting: {},
   },
   getters: {
     thisGame: (state) => {
@@ -26,6 +27,12 @@ export const store = new Vuex.Store({
     },
     getTab: (state) => {
       return state.tab
+    },
+    getMeeting: (state) => {
+      return state.meeting
+    },
+    getAttendees: (state) => {
+      return state.attendees
     }
   },
   mutations: {
@@ -40,6 +47,12 @@ export const store = new Vuex.Store({
     },
     updateTab: (state, payload) => {
       state.tab = payload
+    },
+    updateMeeting: (state, payload) => {
+      state.meeting = payload
+    },
+    updateAttendees: (state, payload) => {
+      state.attendees = payload
     }
   },
   actions: {
@@ -54,6 +67,12 @@ export const store = new Vuex.Store({
     },
     setTab: ({ commit }, payload) => {
       commit('updateTab', payload)
+    },
+    updateMeeting: ({ commit }, payload) => {
+      commit('updateMeeting', payload)
+    },
+    updateAttendees: ({ commit }, payload) => {
+      commit('updateAttendees', payload)
     }
   }
 })

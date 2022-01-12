@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <div @click="setTab('setup')">
+  <div class="scope">
+    <div class="tab" @click="setTab('setup')">
       Set Up
     </div>
-    <div @click="setTab('meeting')">
+    <div class="tab" @click="setTab('meeting')">
       Meeting
     </div>
   </div>
@@ -19,3 +19,16 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .scope {
+
+    .tab {
+      width: 200px;
+      text-align: center;
+      border: 1px solid;
+      display: inline-block;
+      margin: 6px;
+    }
+  }
+</style>
