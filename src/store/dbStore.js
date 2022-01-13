@@ -12,6 +12,7 @@ module.exports = {
         if (err) throw err
         db.gameCollection.updateOne({'_id': res._id}, {attendees: data.meeting.attendees}, (err, res) => {
           io.emit('updateMeeting', data.meeting)
+        })
       })
     } else {
       data.meeting.id = uuidv4()
