@@ -6,6 +6,9 @@
     <div class="tab" @click="setTab('meeting')">
       Meeting
     </div>
+    <div class="tab" @click="setTab('graph')">
+      Results
+    </div>
   </div>
 </template>
 
@@ -13,7 +16,6 @@
 export default {
   methods: {
     setTab(tab) {
-      console.log('setting tab to', tab)
       this.$store.dispatch('setTab', tab)
     }
   }
@@ -24,7 +26,7 @@ export default {
   .scope {
 
     .tab {
-      width: 200px;
+      width: 100px;
       text-align: center;
       border: 1px solid;
       display: inline-block;

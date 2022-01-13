@@ -130,10 +130,15 @@
 </template>
 
 <script>
+import { v4 as uuidv4 } from 'uuid'
+
+import bus from '../socket.js'
+
 export default {
   data() {
     return {
       localMeeting: {
+        id: '',
         name: '',
         day: 0,
         month: 0,
@@ -185,20 +190,20 @@ export default {
       }
     },
     setMeetingField(scope, select) {
-      console.log('setting', select, scope, this.localMeeting)
       const elem = select ? 'set-' + scope + '-select' : 'set-' + scope
-      console.log(elem)
       this.localMeeting[scope] = document.getElementById(elem).value
+      if (scope == 'name' && !select) {
+        this.localMeeting.id = uuidv4()
+        this.$store.dispatch('updateMeetingId', this.localMeeting.id)        
+      }
     },
     createMeeting() {
-      //this.localMeeting.name = document.getElementById('new-meeting').value
-      //this.localMeeting.facilitator = document.getElementById('new-meeting').value
       this.localMeeting.attendees = [
         {name: 'Steve', interaction: 0},
         {name: 'Fred', interaction: 0},
         {name: 'Eric', interaction: 0}
       ]
-      this.$store.dispatch('updateMeeting', this.localMeeting)
+      bus.$emit('senUpdateMeeting', this.localMeeting)
     }
   }
 }
@@ -218,7 +223,7 @@ export default {
       td {
         border: 1px solid #888;
         text-align: left;
-        padding: 6px 3px;
+        padding: 3px 6px;
 
         &.center {
           text-align: center;

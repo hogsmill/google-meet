@@ -14,17 +14,20 @@
       <div v-for="(attendee, index) in meeting.attendees" :key="index" class="attendee">
         <i class="fas fa-user-circle" @click="startTalking(attendee)" :class="{'talking': attendee.name == talking.name}" />
         <br>
-        <span :class="{'talking': attendee.name == talking.name}">{{ attendee.name }}</span>
+        <span :class="{'talking': attendee.name == talking.name}">{{ attendee.name }}: {{ attendee.interaction }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import bus from '../socket.js'
+
 export default {
   data() {
     return {
       running: false,
+      elapsed: 0,
       talking: ''
     }
   },
@@ -36,9 +39,12 @@ export default {
   methods: {
     start() {
       this.running = true
+      this.elapsed = 0
+      this.recordTalking()
     },
     stop() {
       this.running = false
+      this.elapsed = 0
       this.stopTalking()
     },
     startTalking(attendee) {
@@ -48,6 +54,25 @@ export default {
     },
     stopTalking() {
       this.talking = ''
+    },
+    recordTalking() {
+      const self = this
+      if (this.talking) {
+        const attendees = []
+        for (let i = 0; i < this.meeting.attendees.length; i++) {
+          const attendee = this.meeting.attendees[i]
+          if (attendee.name == this.talking.name) {
+            attendee.interaction = attendee.interaction + 1
+          }
+          attendees.push(attendee)
+        }
+        const meeting = this.meeting
+        meeting.attendees = attendees
+        bus.$emit('sendUpdateMeeting', meeting)
+      }
+      setTimeout(function() {
+        self.recordTalking()
+      }, 1000)
     }
   }
 }

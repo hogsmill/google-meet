@@ -12,6 +12,7 @@
       <div class="row">
         <Setup v-if="tab == 'setup'" />
         <Meeting v-if="tab == 'meeting'" />
+        <Graph v-if="tab == 'graph'" />
       </div>
     </div>
   </div>
@@ -26,6 +27,7 @@ import Header from './components/Header.vue'
 import Scope from './components/Scope.vue'
 import Setup from './components/Setup.vue'
 import Meeting from './components/Meeting.vue'
+import Graph from './components/Graph.vue'
 
 export default {
   name: 'App',
@@ -33,7 +35,8 @@ export default {
     Header,
     Scope,
     Setup,
-    Meeting
+    Meeting,
+    Graph
   },
   data() {
     return {
@@ -48,6 +51,9 @@ export default {
     },
     tab() {
       return this.$store.getters.getTab
+    },
+    meetingId() {
+      return this.$store.getters.getMeetingId
     }
   },
   created() {
@@ -60,6 +66,13 @@ export default {
     bus.$on('updateConnections', (data) => {
       this.$store.dispatch('updateConnectionError', null)
       this.$store.dispatch('updateConnections', data)
+    })
+
+    bus.$on('updateMeeting', (data) => {
+      if (data.meeting.id == this.meetingId) {
+        console.log(data)
+        this.$store.dispatch('updateMeeting', data)
+      }
     })
   }
 }

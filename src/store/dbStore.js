@@ -1,19 +1,24 @@
 
+const { v4: uuidv4 } = require('uuid')
+
 module.exports = {
 
-  testMessage: function(db, io, data, debugOn, updating) {
+  updateMeeting: function(db, io, data, debugOn, updating) {
 
-    if (debugOn) { console.log('testMessage', data) }
+    if (debugOn) { console.log('updateMeeting', data) }
 
-    const res = {
-      source: data.source,
-      date: new Date().toISOString(),
-      message: data.message
+    if (data.meeting.id) {
+      db.gameCollection.findOne({id: data.meeting.id}, (err, res) => {
+        if (err) throw err
+        db.gameCollection.updateOne({'_id': res._id}, {attendees: data.meeting.attendees}, (err, res) => {
+          io.emit('updateMeeting', data.meeting)
+      })
+    } else {
+      data.meeting.id = uuidv4()
+      db.gameCollection.insertOne(data.meeting, (err, res) => {
+        io.emit('updateMeeting', data.meeting)
+      })
     }
-    db.gameCollection.insertOne(res, (err) => {
-      if (err) throw err
-      io.emit('testMessage', res)
-    })
   }
 
 }

@@ -10,6 +10,7 @@ export const store = new Vuex.Store({
     connectionError: null,
     localStorageStatus: true,
     tab: '',
+    meetingId: '',
     meeting: {},
   },
   getters: {
@@ -27,6 +28,9 @@ export const store = new Vuex.Store({
     },
     getTab: (state) => {
       return state.tab
+    },
+    getMeetingId: (state) => {
+      return state.meetingId
     },
     getMeeting: (state) => {
       return state.meeting
@@ -48,6 +52,9 @@ export const store = new Vuex.Store({
     updateTab: (state, payload) => {
       state.tab = payload
     },
+    updateMeetingId: (state, payload) => {
+      state.meetingId = payload
+    },
     updateMeeting: (state, payload) => {
       state.meeting = payload
     },
@@ -67,6 +74,9 @@ export const store = new Vuex.Store({
     },
     setTab: ({ commit }, payload) => {
       commit('updateTab', payload)
+    },
+    updateMeetingId: ({ commit }, payload) => {
+      commit('updateMeeting', payload)
     },
     updateMeeting: ({ commit }, payload) => {
       commit('updateMeeting', payload)
