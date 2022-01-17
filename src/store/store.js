@@ -54,6 +54,7 @@ export const store = new Vuex.Store({
     },
     updateMeetingId: (state, payload) => {
       state.meetingId = payload
+      console.log(state)
     },
     updateMeeting: (state, payload) => {
       state.meeting = payload
@@ -76,7 +77,7 @@ export const store = new Vuex.Store({
       commit('updateTab', payload)
     },
     updateMeetingId: ({ commit }, payload) => {
-      commit('updateMeeting', payload)
+      commit('updateMeetingId', payload)
     },
     updateMeeting: ({ commit }, payload) => {
       commit('updateMeeting', payload)

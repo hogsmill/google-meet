@@ -114,12 +114,15 @@
     <table>
       <tr>
         <td colspan="2" class="center">
-          <input> Add New
+          <input>
+          <button>
+            Add New
+          </button>
         </td>
       </tr>
       <tr v-for="(attendee, index) in meeting.attendees" :key="index">
         <td>
-          {{ attendee.name }}
+          {{ attendee.name }} ({{ attendee.interaction }})
         </td>
         <td>
           Actions
@@ -192,10 +195,6 @@ export default {
     setMeetingField(scope, select) {
       const elem = select ? 'set-' + scope + '-select' : 'set-' + scope
       this.localMeeting[scope] = document.getElementById(elem).value
-      if (scope == 'name' && !select) {
-        this.localMeeting.id = uuidv4()
-        this.$store.dispatch('updateMeetingId', this.localMeeting.id)        
-      }
     },
     createMeeting() {
       this.localMeeting.attendees = [
@@ -203,7 +202,13 @@ export default {
         {name: 'Fred', interaction: 0},
         {name: 'Eric', interaction: 0}
       ]
-      bus.$emit('senUpdateMeeting', this.localMeeting)
+      if (!this.localMeeting.id) {
+        const id = uuidv4()
+        this.localMeeting.id = id
+        this.$store.dispatch('updateMeetingId', id)
+      }
+      localStorage.setItem('google-meet', this.localMeeting.id)
+      bus.$emit('sendUpdateMeeting', this.localMeeting)
     }
   }
 }

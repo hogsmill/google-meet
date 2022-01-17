@@ -70,9 +70,11 @@ export default {
         meeting.attendees = attendees
         bus.$emit('sendUpdateMeeting', meeting)
       }
-      setTimeout(function() {
-        self.recordTalking()
-      }, 1000)
+      if (this.running) {
+        setTimeout(function() {
+          self.recordTalking()
+        }, 1000)
+      }
     }
   }
 }

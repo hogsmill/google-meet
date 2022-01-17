@@ -69,8 +69,7 @@ export default {
     })
 
     bus.$on('updateMeeting', (data) => {
-      if (data.meeting.id == this.meetingId) {
-        console.log(data)
+      if (data.id == this.meetingId) {
         this.$store.dispatch('updateMeeting', data)
       }
     })
