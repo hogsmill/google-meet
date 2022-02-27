@@ -208,7 +208,7 @@ export default {
         this.$store.dispatch('updateMeetingId', id)
       }
       localStorage.setItem('google-meet', this.localMeeting.id)
-      bus.$emit('sendUpdateMeeting', this.localMeeting)
+      bus.emit('sendUpdateMeeting', this.localMeeting)
     }
   }
 }

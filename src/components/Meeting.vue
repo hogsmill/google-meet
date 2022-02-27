@@ -68,7 +68,7 @@ export default {
         }
         const meeting = this.meeting
         meeting.attendees = attendees
-        bus.$emit('sendUpdateMeeting', meeting)
+        bus.emit('sendUpdateMeeting', meeting)
       }
       if (this.running) {
         setTimeout(function() {

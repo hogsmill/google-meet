@@ -15,6 +15,7 @@
         <Graph v-if="tab == 'graph'" />
       </div>
     </div>
+    <Modals />
   </div>
 </template>
 
@@ -28,6 +29,7 @@ import Scope from './components/Scope.vue'
 import Setup from './components/Setup.vue'
 import Meeting from './components/Meeting.vue'
 import Graph from './components/Graph.vue'
+import Modals from './components/Modals.vue'
 
 export default {
   name: 'App',
@@ -36,7 +38,8 @@ export default {
     Scope,
     Setup,
     Meeting,
-    Graph
+    Graph,
+    Modals
   },
   data() {
     return {
@@ -59,16 +62,16 @@ export default {
   created() {
     this.$store.dispatch('localStorageStatus', ls.check())
 
-    bus.$on('connectionError', (data) => {
+    bus.on('connectionError', (data) => {
       this.$store.dispatch('updateConnectionError', data)
     })
 
-    bus.$on('updateConnections', (data) => {
+    bus.on('updateConnections', (data) => {
       this.$store.dispatch('updateConnectionError', null)
       this.$store.dispatch('updateConnections', data)
     })
 
-    bus.$on('updateMeeting', (data) => {
+    bus.on('updateMeeting', (data) => {
       if (data.id == this.meetingId) {
         this.$store.dispatch('updateMeeting', data)
       }
